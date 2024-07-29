@@ -24,10 +24,19 @@ onMounted(() => {
               <form action="">
                 <div class="col-md-12">
                   <label for="form-label">Add New Task</label>
-                  <input type="text" class="form-control" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="todoStore.todoForm.title"
+                  />
                 </div>
                 <div class="mt-3">
-                  <input type="button" class="btn btn-success" value="Add Task" />
+                  <input
+                    type="button"
+                    class="btn btn-success"
+                    value="Add Task"
+                    @click.prevent="todoStore.createTodo"
+                  />
                 </div>
               </form>
             </div>
@@ -40,9 +49,12 @@ onMounted(() => {
                 :key="todo.id"
                 class="list-group-item d-flex justify-content-between align-items-center"
               >
-                <span :class="todo.completed ? 'text-decoration-line-through' : ''">
-                  {{ todo.title }}
-                </span>
+                <div class="">
+                  <input type="checkbox" name="" id="" class="form-check-input me-2" />
+                  <span :class="todo.completed ? 'text-decoration-line-through' : ''">
+                    {{ todo.title }}
+                  </span>
+                </div>
                 <a href="" class="btn"> <i class="fa-solid fa-xmark"></i></a>
               </li>
             </ul>
