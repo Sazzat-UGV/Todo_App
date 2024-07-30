@@ -23,19 +23,30 @@ onMounted(() => {
             <div class="row">
               <form action="">
                 <div class="col-md-12">
-                  <label for="form-label">Add New Task</label>
+                  <label for="form-label">
+                    <span v-if="!todoStore.isEdit">Add New Task</span>
+                    <span v-else>Update Task</span>
+                  </label>
                   <input
                     type="text"
                     class="form-control"
                     v-model="todoStore.todoForm.title"
                   />
                 </div>
-                <div class="mt-3">
+                <div class="mt-3" v-if="!todoStore.isEdit">
                   <input
                     type="button"
                     class="btn btn-success"
                     value="Add Task"
                     @click.prevent="todoStore.createTodo"
+                  />
+                </div>
+                <div class="mt-3" v-else>
+                  <input
+                    type="button"
+                    class="btn btn-warning"
+                    value="Update Task"
+                    @click.prevent="todoStore.updateTodo(todoStore.editId)"
                   />
                 </div>
               </form>
@@ -50,12 +61,18 @@ onMounted(() => {
                 class="list-group-item d-flex justify-content-between align-items-center"
               >
                 <div class="">
-                  <input type="checkbox" name="" id="" class="form-check-input me-2" />
-                  <span :class="todo.completed ? 'text-decoration-line-through' : ''">
+                  <span>
                     {{ todo.title }}
                   </span>
                 </div>
-                <a href="" class="btn"> <i class="fa-solid fa-xmark"></i></a>
+                <div class="">
+                  <button class="btn" @click.prevent="todoStore.getTodo(todo.id)">
+                    <i class="fa-solid fa-edit"></i>
+                  </button>
+                  <button class="btn" @click.prevent="todoStore.deleteTodo(todo.id)">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
               </li>
             </ul>
           </div>
